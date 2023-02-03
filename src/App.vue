@@ -1,15 +1,16 @@
 <template>
   <div>
+      <menu-component />
       <router-view />
   </div>
 </template>
 
 <script>
-// import Menu from './components/pierino/Menu.vue'
+import MenuComponent from './components/MenuComponent.vue'
 // import Footer from './components/pierino/Footer.vue'
 // import BoxPopUp from './components/pierino/BoxPopUp.vue'
 
 export default{
-  // components: { Menu, Footer, BoxPopUp }
+  components: { MenuComponent }
 }
 </script>

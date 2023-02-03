@@ -1,39 +1,38 @@
 import { defineStore } from 'pinia'
-import CategoriesService from '../services/CategoriesService';
+import BooksService from '../services/BooksService';
 
-export const categoriesStore = defineStore("categoriesStore", {
+export const booksStore = defineStore("booksStore", {
     state: () => ({
-        categories: [],
-        category: {}
+        books: [],
+        book: {}
     }),
     getters: {
-        getCategories(state) {
-            return state.categories;
+        getBooks(state) {
+            return state.books;
         },
-        getCategory(state) {
-            return state.category;
+        getBook(state) {
+            return state.book;
         }
     },
     actions: {
-        async fetchCategories() {
-            await CategoriesService.get()
-                .then(({ data }) => (this.categories = data))
+        async fetchBooks() {
+            await BooksService.get()
+                .then(({ data }) => (this.books = data))
                 .catch((e) =>{
                     console.log(e);
                 });
         },
         async find(id) {
-            await CategoriesService.find(id)
+            await BooksService.find(id)
                 .then(response => {
-                    console.log(response)
-                    this.category = response.data
+                    this.book = response.data
                 })
                 .catch((e) =>{
                     console.log(e);
                 });
         },
         async create(data) {
-            await CategoriesService.create(data)
+            await BooksService.create(data)
                 .then(response => {
                     console.log('Salvo com sucesso!')
                 })
@@ -42,7 +41,8 @@ export const categoriesStore = defineStore("categoriesStore", {
                 });
         },
         async update(data, id) {
-            await CategoriesService.update(data, id)
+            console.log(data);
+            await BooksService.update(data, id)
                 .then(response => {
                     console.log('Atualizado com sucesso!')
                 })
@@ -51,11 +51,7 @@ export const categoriesStore = defineStore("categoriesStore", {
                 });
         },
         async delete(id) {
-            await CategoriesService.delete(id).then(response => {
-                console.log(response)
-            }).catch((e) => {
-                console.log(e);
-            });
+            await BooksService.delete(id);
         }
     },
 })

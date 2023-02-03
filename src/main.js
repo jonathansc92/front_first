@@ -3,16 +3,14 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import PrimeVue from 'primevue/config';
+import Toaster from '@meforma/vue-toaster';
 
-import 'primevue/resources/themes/lara-light-teal/theme.css'
-import 'primevue/resources/primevue.min.css'
-import 'primeicons/primeicons.css'
+import './index.css'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(PrimeVue);
+app.use(Toaster)
 
 app.mount('#app')

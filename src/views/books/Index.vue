@@ -7,17 +7,20 @@
             </div>
         </div>
         <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <a :href="`/categoria/add`" class="flex justify-end font-medium text-white-600 dark:green-red-500 hover:underline m-6">
+            <a :href="`/livro/add`" class="flex justify-end font-medium text-white-600 dark:green-red-500 hover:underline m-6">
                 Adicionar
             </a>
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Descrição
+                            Título
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Autor
                         </th>
                         <th scope="col" class="px-6 py-3" colspan="3">
                             Ação
@@ -26,28 +29,31 @@
                 </thead>
                 <tbody>
                     <tr 
-                        v-for="category, index in data.data"
+                        v-for="book, index in data.data"
                         :key="index" 
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ category.id }}
+                            {{ book.id }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ category.description }}
+                            {{ book.title }}
                         </td>
                         <td class="px-6 py-4">
-                            <a :href="`/categoria/edit/${category.id}`" data-modal-target="staticModal" data-modal-toggle="staticModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            {{ book.author.name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a :href="`/livro/edit/${book.id}`" data-modal-target="staticModal" data-modal-toggle="staticModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Editar
                             </a>
                         </td>
                         <td class="px-6 py-4">
-                            <a :href="`/categoria/${category.id}`" class="font-medium text-black-600 dark:text-red-500 hover:underline">
+                            <a :href="`/livro/${book.id}`" class="font-medium text-black-600 dark:text-red-500 hover:underline">
                                 Ver
                             </a>
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" @click="remove(category.id, index)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                            <a href="#" @click="remove(book.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
                                 Deletar
                             </a>
                         </td>
@@ -60,7 +66,7 @@
 
 <script>
     import { ref } from 'vue';
-    import { categoriesStore } from "../../stores/Categories";
+    import { booksStore } from "../../stores/Books";
 
     export default {
         components:{ 
@@ -69,28 +75,24 @@
         data() {
             return {
                 data: ref([]),
-                categoriesStore: categoriesStore()
+                booksStore: booksStore()
             }
         },
         mounted() {
-            this.getCategories();
+            this.getBooks();
         },
         methods: {
-            getCategories() {
-                this.categoriesStore.fetchCategories().then(response => 
+            getBooks() {
+                this.booksStore.fetchBooks().then(response => 
                     {
-                        this.data = this.categoriesStore.getCategories;
+                        this.data = this.booksStore.getBooks;
                     }).catch((e) =>{
                         console.log(e);
                     });
             },
-            remove(id, index) {
-                this.categoriesStore.delete(id).then(response => {
-                    this.data.data.splice(index, 1),
-                    this.$toast.success(`Categoria deletada com sucesso!`)
-                }).catch((error) => 
-                    this.$toast.error(`Falha ao deletar, contate o administrador!`)
-                )
+            remove(id) {
+                alert('oi')
+                this.booksStore.delete(id)
             }
         }
     }

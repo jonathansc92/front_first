@@ -7,7 +7,7 @@
             </div>
         </div>
         <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <a :href="`/categoria/add`" class="flex justify-end font-medium text-white-600 dark:green-red-500 hover:underline m-6">
+            <a :href="`/autor/add`" class="flex justify-end font-medium text-white-600 dark:green-red-500 hover:underline m-6">
                 Adicionar
             </a>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -17,7 +17,7 @@
                             ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Descrição
+                            Nome
                         </th>
                         <th scope="col" class="px-6 py-3" colspan="3">
                             Ação
@@ -26,28 +26,28 @@
                 </thead>
                 <tbody>
                     <tr 
-                        v-for="category, index in data.data"
+                        v-for="author, index in data.data"
                         :key="index" 
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ category.id }}
+                            {{ author.id }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ category.description }}
+                            {{ author.name }}
                         </td>
                         <td class="px-6 py-4">
-                            <a :href="`/categoria/edit/${category.id}`" data-modal-target="staticModal" data-modal-toggle="staticModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            <a :href="`/autor/edit/${author.id}`" data-modal-target="staticModal" data-modal-toggle="staticModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Editar
                             </a>
                         </td>
                         <td class="px-6 py-4">
-                            <a :href="`/categoria/${category.id}`" class="font-medium text-black-600 dark:text-red-500 hover:underline">
+                            <a :href="`/autor/${author.id}`" class="font-medium text-black-600 dark:text-red-500 hover:underline">
                                 Ver
                             </a>
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" @click="remove(category.id, index)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                            <a href="#" @click="remove(author.id, index)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
                                 Deletar
                             </a>
                         </td>
@@ -60,37 +60,39 @@
 
 <script>
     import { ref } from 'vue';
-    import { categoriesStore } from "../../stores/Categories";
+    import { authorsStore } from "../../stores/Authors";
 
     export default {
-        components:{ 
-         },
-
         data() {
             return {
                 data: ref([]),
-                categoriesStore: categoriesStore()
+                authorsStore: authorsStore()
             }
         },
         mounted() {
-            this.getCategories();
+            this.getAuthors();
         },
         methods: {
-            getCategories() {
-                this.categoriesStore.fetchCategories().then(response => 
+            getAuthors() {
+                this.authorsStore.fetchAuthors().then(response => 
                     {
-                        this.data = this.categoriesStore.getCategories;
+                        this.data = this.authorsStore.getAuthors;
                     }).catch((e) =>{
                         console.log(e);
                     });
             },
             remove(id, index) {
-                this.categoriesStore.delete(id).then(response => {
-                    this.data.data.splice(index, 1),
-                    this.$toast.success(`Categoria deletada com sucesso!`)
-                }).catch((error) => 
+                this.authorsStore.delete(id).then(response => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        this.data.data.splice(index, 1),
+                        this.$toast.success(`Autor deletado com sucesso!`)
+                    } else {
+                        this.$toast.error(`Falha ao deletar, contate o administrador!`)
+                    }
+                }).catch((error) => {
                     this.$toast.error(`Falha ao deletar, contate o administrador!`)
-                )
+                })
             }
         }
     }
