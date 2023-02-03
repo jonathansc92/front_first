@@ -1,29 +1,15 @@
 # first-front
 
-This template should help get you started developing with Vue 3 in Vite.
+Desenvolvido em Vue 3, utilizando vue router, vite, pinia para controle de estados.
 
-## Recommended IDE Setup
+## Como rodar?
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Apenas utilizar o comando docker-compose up -d
 
-## Customize configuration
+## O que melhoraria se tivesse tempo?
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+- Testes;
+- Validações;
+- Layout mais amigável;
+- Navegações;
+- Cadastro utilizando modais e não páginas.
