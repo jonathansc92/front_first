@@ -102,8 +102,6 @@
                 this.form.description = this.description;
                 this.form.author_id = this.authorId;
                 this.form.categories = this.categoriesLst;
-                console.log(this.form.categories)
-                console.log(this.categoriesLst)
             }
         },
         methods: {
@@ -125,6 +123,22 @@
             },
             submitForm(e) {
                 e.preventDefault();
+
+                if (this.form.title === null || this.form.title === '') {
+                    this.$toast.warning(`O campo título é obrigatório`);
+                    return;
+                }
+
+                if (this.form.description === null || this.form.description === '') {
+                    this.$toast.warning(`O campo descrição é obrigatório`);
+                    return;
+                }
+                
+                if (this.form.author_id === null || this.form.author_id === '') {
+                    this.$toast.warning(`Por favor, selecione um autor!`);
+                    return;
+                }
+
                 if (this.title) {
                     this.booksStore.update(this.form, this.$route.params.id).then(response => {
                         this.$toast.success(`Livro atualizado com sucesso!`)

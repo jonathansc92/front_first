@@ -43,6 +43,12 @@
         methods: {
             submitForm(e) {
                 e.preventDefault();
+                
+                if (this.form.name === null || this.form.name === '') {
+                    this.$toast.warning(`O campo nome é obrigatório`);
+                    return;
+                }
+
                 if (this.name) {
                     this.authorsStore.update(this.form, this.$route.params.id).then(response => {
                         this.$toast.success(`Autor atualizado com sucesso!`)

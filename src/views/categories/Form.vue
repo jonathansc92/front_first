@@ -43,6 +43,12 @@
         methods: {
             submitForm(e) {
                 e.preventDefault();
+                
+                if (this.form.description === null || this.form.description === '') {
+                    this.$toast.warning(`O campo descrição é obrigatório`);
+                    return;
+                }
+
                 if (this.description) {
                     this.categoriesStore.update(this.form, this.$route.params.id).then(response => {
                         this.$toast.success(`Categoria atualizada com sucesso!`)
