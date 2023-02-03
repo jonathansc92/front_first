@@ -83,13 +83,8 @@
             },
             remove(id, index) {
                 this.authorsStore.delete(id).then(response => {
-                    console.log(response)
-                    if (response.status === 200) {
-                        this.data.data.splice(index, 1),
-                        this.$toast.success(`Autor deletado com sucesso!`)
-                    } else {
-                        this.$toast.error(`Falha ao deletar, contate o administrador!`)
-                    }
+                    this.data.data.splice(index, 1),
+                    this.$toast.success(`Autor deletado com sucesso!`)
                 }).catch((error) => {
                     this.$toast.error(`Falha ao deletar, contate o administrador!`)
                 })

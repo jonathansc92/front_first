@@ -53,7 +53,7 @@
                             </a>
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" @click="remove(book.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                            <a href="#" @click="remove(book.id, index)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
                                 Deletar
                             </a>
                         </td>
@@ -90,9 +90,13 @@
                         console.log(e);
                     });
             },
-            remove(id) {
-                alert('oi')
-                this.booksStore.delete(id)
+            remove(id, index) {
+                this.booksStore.delete(id).then(response => {
+                    this.data.data.splice(index, 1),
+                    this.$toast.success(`Livro deletado com sucesso!`)
+                }).catch((error) => {
+                    this.$toast.error(`Falha ao deletar, contate o administrador!`)
+                })
             }
         }
     }
